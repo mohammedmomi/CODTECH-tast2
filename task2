@@ -1,0 +1,88 @@
+'import nmap
+
+def scan_open_ports(target):
+    nm = nmap.PortScanner()
+    nm.scan(target, '1-1024')
+    for host in nm.all_hosts():
+        print(f'Host : {host} ({nm[host].hostname()})')
+        print(f'State : {nm[host].state()}')
+        for proto in nm[host].all_protocols():
+            print(f'Protocol : {proto}')
+            lport = nm[host][proto].keys()
+            for port in lport:
+                print(f'Port : {port}\tState : {nm[host][proto][port]["state"]}')
+
+if _name_ == "_main_":
+    target = '192.168.1.1'  # Replace with the target IP or domain
+    scan_open_ports(target)
+import requests
+
+def check_outdated_software(software_list):
+    for software in software_list:
+        response = requests.get(f'https://vuldb.com/?search={software}')
+        if response.status_code == 200:
+            print(f'{software} might be outdated or vulnerable.')
+        else:
+            print(f'{software} is up to date.')
+
+if _name_ == "_main_":
+    software_list = ['nginx', 'apache', 'mysql']  # Replace with the list of software to check
+    check_outdated_software(software_list)
+import os
+
+def check_misconfigurations():
+    # Example: Check if SSH root login is enabled
+    with open('/etc/ssh/sshd_config', 'r') as file:
+        config = file.read()
+        if 'PermitRootLogin yes' in config:
+            print('Warning: SSH root login is enabled.')
+        else:
+            print('SSH root login is disabled.')
+
+if _name_ == "_main_":
+    check_misconfigurations()
+import nmap
+import requests
+import os
+
+def scan_open_ports(target):
+    nm = nmap.PortScanner()
+    nm.scan(target, '1-1024')
+    for host in nm.all_hosts():
+        print(f'Host : {host} ({nm[host].hostname()})')
+        print(f'State : {nm[host].state()}')
+        for proto in nm[host].all_protocols():
+            print(f'Protocol : {proto}')
+            lport = nm[host][proto].keys()
+            for port in lport:
+                print(f'Port : {port}\tState : {nm[host][proto][port]["state"]}')
+
+def check_outdated_software(software_list):
+    for software in software_list:
+        response = requests.get(f'https://vuldb.com/?search={software}')
+        if response.status_code == 200:
+            print(f'{software} might be outdated or vulnerable.')
+        else:
+            print(f'{software} is up to date.')
+
+def check_misconfigurations():
+    with open('/etc/ssh/sshd_config', 'r') as file:
+        config = file.read()
+        if 'PermitRootLogin yes' in config:
+            print('Warning: SSH root login is enabled.')
+        else:
+            print('SSH root login is disabled.')
+
+if _name_ == "_main_":
+    target = '192.168.1.1'  # Replace with the target IP or domain
+    software_list = ['nginx', 'apache', 'mysql']  # Replace with the list of software to check
+
+    print("Scanning for open ports...")
+    scan_open_ports(target)
+
+    print("\nChecking for outdated software...")
+    check_outdated_software(software_list)
+
+    print("\nChecking for misconfigurations...")
+    check_misconfigurations()
+'
